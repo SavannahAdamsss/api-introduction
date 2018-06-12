@@ -37,7 +37,7 @@
 
 - Append data from a fetch request to the DOM
   - Work with an array of data
-- POST data to an API
+- POST data to an API from a form
 
 ## Notes
 

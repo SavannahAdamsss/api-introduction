@@ -4,36 +4,28 @@ var baseUrl = 'https://jsonplaceholder.typicode.com/posts/'
 // Write a function that fetches data for one blog post from the API
 
 function getBlogPosts(url) {
-  fetch(url)                          // 1. request data
-    .then(function(response) {        // 2. Receive a response
-      return response.json()          // 3. Turn response into JSON so we can work with it
+  fetch(url)                        // 1. request data
+    .then(function(response) {      // 2. Receive a response
+      return response.json()        // 3. Turn response into JSON so we can work with it
     })
-    .then(function(data) {
+    .then(function(blogPostsArray) {
       // 4. Data is now formatted to JSON so we can do whatever we want
-        // Must do it here because of async
-        // Work with data in some way
-        // Often DOM manipulation
+      // Must do it here because of async
+      // Work with data in some way
+      // Often DOM manipulation
 
-      console.log(data)
-      console.log(data.body)
-      console.log(data.title)
-      
-      // Grab the right section of the DOM to append to
-      var $posts = document.querySelector('.blog-posts')
+      // Check that our blog post data has come through properly
+      console.log('DATA', blogPostsArray)
 
-      // Create a new element
-      var newH1 = document.createElement('h1')
-
-      // Add data to the element
-      newH1.innerText = data.title
-
-      // Append element to page
-      $posts.appendChild(newH1)
-      
+      // Call our function to add the blog posts to the DOM
+      // Pass it the array of data
+      addBlogPosts(blogPostsArray)
     })
 }
 
-getBlogPosts(baseUrl + '1')
+// Invoke our getBlogPosts function and pass it the appropriate URL
+
+// getBlogPosts(baseUrl + '1')
 
 
 // Write a function that appends data from blog post to the page
@@ -42,15 +34,42 @@ getBlogPosts(baseUrl + '1')
   // body
 
 
-// Write a function that fetches data for the entire list of blog posts
+// Reuse our getBlogPosts function to fetch data for the entire list of blog posts
+getBlogPosts(baseUrl)
 
+// Write a function that appends data from all blog posts 
+// to the page
+  // Take in an array of data as a parameter
+  // Use a for loop
 
+function addBlogPosts(postsArray) {
+  for (i = 0; i < postsArray.length; i++) {
+    // Create a list item as the container
+    // Create an h2 element
+    // Create a p element
+    var newLi = document.createElement('li')
+    var header = document.createElement('h2')
+    var paragraph = document.createElement('p')
+        
+    // Give h2 text: title of the current blog post in the loop
+    // Give p text: body of the current blog post in the loop
+    var title = postsArray[i].title
+    var body = postsArray[i].body
+    header.innerText = title
+    paragraph.innerText = body
+    
+    // Append h2 and p to li
+    newLi.appendChild(header)
+    newLi.appendChild(paragraph)
 
-// Write a function that appends data from all blog posts to the page
-  // Append to the section with class "posts"
-  // title
-  // body
+    // Check to make sure the list item has been constructed properly
+    console.log(newLi)
 
+    // Append the list item to the ul with class "posts"
+    var posts = document.querySelector('ul.posts')
+    posts.appendChild(newLi)
+  }
+}
 
 
 // Write a function that POSTs data to the API
